@@ -7,6 +7,7 @@ import {
     ModalHeader,
     ModalOverlay,
 } from "@chakra-ui/modal";
+import { Box } from "@chakra-ui/react";
 import { Button } from "@chakra-ui/button";
 import { iCompany } from "../../models";
 import {
@@ -16,9 +17,8 @@ import {
     NumberInputField,
     NumberInputStepper,
 } from "@chakra-ui/number-input";
-import { Text } from "@chakra-ui/layout";
 import { useTranslation } from "react-i18next";
-import { FormControl, FormErrorMessage, FormLabel } from "@chakra-ui/form-control";
+import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Field, Form, Formik } from "formik";
 import { useAppDispatch } from "../../../../common/hooks";
 import { editCompanyAsync } from "../companies-list/company.slicer";
@@ -37,7 +37,7 @@ export default function CompanyBudgetModal({
     const { company_name, budget, budget_spent, id } = company;
     const dispatch = useAppDispatch();
 
-    const validateName = (value: number) => {
+    const validateBudget = (value: number) => {
         let error;
         if (!value) {
             error = "Budget is required";
@@ -49,6 +49,7 @@ export default function CompanyBudgetModal({
     return (
         <Modal isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
+
             <ModalContent>
                 <Formik
                     initialValues={{ budget: budget }}
@@ -59,36 +60,39 @@ export default function CompanyBudgetModal({
                         onClose();
                     }}
                 >
-                    {({ isSubmitting }) => (
+                    {() => (
                         <Form>
-                            <ModalHeader data-test-id="company_name">{company_name}</ModalHeader>
+                            <ModalHeader data-testid="company_name">{company_name}</ModalHeader>
                             <ModalCloseButton />
                             <ModalBody>
-                                <Field id="budget" name="budget" validate={validateName}>
+                                <Field id="budget" name="budget" validate={validateBudget}>
                                     {({ field, form }: { field: any; form: any }) => (
                                         <FormControl isInvalid={form.errors.budget && form.touched.budget}>
                                             <FormLabel htmlFor="budget">{t("budget")}</FormLabel>
 
                                             <NumberInput
                                                 {...field}
-                                                min={budget_spent}
                                                 onChange={(val) => form.setFieldValue(field.name, Number(val))}
                                             >
-                                                <NumberInputField />
+                                                <NumberInputField data-testid="number-input-field" />
                                                 <NumberInputStepper>
                                                     <NumberIncrementStepper />
                                                     <NumberDecrementStepper />
                                                 </NumberInputStepper>
                                             </NumberInput>
 
-                                            <FormErrorMessage>{form.errors.budget}</FormErrorMessage>
+                                            {form.errors.budget && (
+                                                <Box mt={2} fontSize="sm" color="red" data-testid="input-error">
+                                                    {form.errors.budget}
+                                                </Box>
+                                            )}
                                         </FormControl>
                                     )}
                                 </Field>
                             </ModalBody>
 
                             <ModalFooter>
-                                <Button colorScheme="teal" mr={3} type="submit" disabled={isSubmitting}>
+                                <Button colorScheme="teal" mr={3} type="submit">
                                     Submit
                                 </Button>
                                 <Button variant="ghost" onClick={onClose}>

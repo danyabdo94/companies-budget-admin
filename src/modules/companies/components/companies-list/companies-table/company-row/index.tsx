@@ -66,7 +66,7 @@ export default function CompanyTableRow({ company }: { company: iCompany }): JSX
                                     <StatGroup>
                                         <Stat>
                                             <StatNumber>
-                                                <Box textAlign="center" data-test-id="budget">
+                                                <Box textAlign="center" data-testid="budget">
                                                     {formatCurrency(budget)}
                                                 </Box>
                                             </StatNumber>
@@ -77,7 +77,7 @@ export default function CompanyTableRow({ company }: { company: iCompany }): JSX
                                     <StatGroup>
                                         <Stat>
                                             <StatNumber>
-                                                <Box textAlign="center" color="red.700" data-test-id="budget_spent">
+                                                <Box textAlign="center" color="red.700" data-testid="budget_spent">
                                                     {formatCurrency(budget_spent)}
                                                 </Box>
                                             </StatNumber>
@@ -88,7 +88,7 @@ export default function CompanyTableRow({ company }: { company: iCompany }): JSX
                                     <StatGroup>
                                         <Stat>
                                             <StatNumber>
-                                                <Box textAlign="center" data-test-id="budget_remaining">
+                                                <Box textAlign="center" data-testid="budget_remaining">
                                                     {formatCurrency(budget - budget_spent)}
                                                 </Box>
                                             </StatNumber>

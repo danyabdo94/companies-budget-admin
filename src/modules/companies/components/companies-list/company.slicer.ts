@@ -1,6 +1,6 @@
 import { CompaniesState } from "./../../models";
 import { ASYNC_STATUS } from "../../../../common/enums";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../../../../common/store";
 import { editCompanyService, getCompaniesService } from "../../service";
 import { iCompany } from "../../models";
@@ -27,7 +27,7 @@ export const CompaniesSlice = createSlice({
     name: "Companies",
     initialState,
     reducers: {
-        editCompany: (state, action: PayloadAction<iCompany>) => {
+        editCompany: (state) => {
             state.list = [...state.list];
         },
     },

@@ -11,7 +11,7 @@ export default function Header(): JSX.Element {
     return (
         <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding={6} bg="teal.500" color="white">
             <Flex align="center" mr={5}>
-                <Heading as="h1" size="lg" letterSpacing={"tighter"}>
+                <Heading as="h1" size="lg" letterSpacing={"tighter"} data-testid="logo">
                     {t("logo")}
                 </Heading>
             </Flex>

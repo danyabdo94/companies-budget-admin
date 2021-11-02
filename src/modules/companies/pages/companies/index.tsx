@@ -9,7 +9,9 @@ export default function Companies(): JSX.Element {
         <>
             <Flex my={2} mx={4} alignItems="center">
                 <Box p="2">
-                    <Text fontSize="4xl">{t("companies")}</Text>
+                    <Text data-testid="header-companies" fontSize="4xl">
+                        {t("companies")}
+                    </Text>
                 </Box>
                 <Spacer />
             </Flex>
