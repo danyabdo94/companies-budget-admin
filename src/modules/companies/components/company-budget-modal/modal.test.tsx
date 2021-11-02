@@ -18,7 +18,7 @@ describe("Company Budget Modal", () => {
     afterEach(() => cleanup());
     const onClose = () => undefined;
 
-    it("should render title", () => {
+    test("should render title", () => {
         const { getByText } = render(
             <Provider store={store}>
                 <CompanyBudgetModal onClose={onClose} isOpen={true} company={company} />
@@ -28,7 +28,7 @@ describe("Company Budget Modal", () => {
         expect(title).toBeDefined();
     });
 
-    it("renders input with numbers pattern", () => {
+    test("renders input with numbers pattern", () => {
         const { getByTestId } = render(
             <Provider store={store}>
                 <CompanyBudgetModal onClose={onClose} isOpen={true} company={company} />
@@ -38,7 +38,7 @@ describe("Company Budget Modal", () => {
         expect(getByTestId("number-input-field")).toHaveAttribute("pattern", "[0-9]*(.[0-9]+)?");
     });
 
-    it("renders input pre filled with right data", () => {
+    test("renders input pre filled with right data", () => {
         const { getByTestId } = render(
             <Provider store={store}>
                 <CompanyBudgetModal onClose={onClose} isOpen={true} company={company} />
@@ -48,7 +48,7 @@ describe("Company Budget Modal", () => {
         expect(getByTestId("number-input-field")).toHaveValue(String(company.budget));
     });
 
-    it("input shouldn't be empty", async () => {
+    test("input shouldn't be empty", async () => {
         const { getByTestId, findByTestId } = render(
             <Provider store={store}>
                 <CompanyBudgetModal onClose={onClose} isOpen={true} company={company} />
@@ -65,7 +65,7 @@ describe("Company Budget Modal", () => {
         expect(validationErrors.innerHTML).toBe("Budget is required");
     });
 
-    it("input should be > spent", async () => {
+    test("input should be > spent", async () => {
         const { getByTestId, findByTestId } = render(
             <Provider store={store}>
                 <CompanyBudgetModal onClose={onClose} isOpen={true} company={company} />
