@@ -12,8 +12,10 @@ import {
     Grid,
     GridItem,
 } from "@chakra-ui/react";
+import { useAppDispatch } from "../../../../../../common/hooks";
 import { iCompany } from "../../../../models";
 import CompanyBudgetModal from "../../../company-budget-modal";
+import { editCompanyAsync } from "../../company.slicer";
 
 {
     /* TODO: make it country based */
@@ -28,7 +30,13 @@ export default function CompanyTableRow({ company }: { company: iCompany }): JSX
     const { id, company_name, budget, budget_spent, date_of_contract_sign } = company;
     const tempDate = new Date(date_of_contract_sign);
     const { isOpen, onOpen: openDialog, onClose } = useDisclosure();
+    const dispatch = useAppDispatch();
 
+    const editCompany = ({ companyData }: { companyData: iCompany }) => {
+        dispatch(editCompanyAsync({ company: companyData, companyId: companyData.id })).then(() => {
+            onClose();
+        });
+    };
     return (
         <>
             <Tr
@@ -44,7 +52,7 @@ export default function CompanyTableRow({ company }: { company: iCompany }): JSX
                 <Td>
                     <Center>{id}</Center>
                     {/* TODO: Find another way => it's hidden  */}
-                    <CompanyBudgetModal isOpen={isOpen} onClose={onClose} company={company} />
+                    <CompanyBudgetModal saveData={editCompany} isOpen={isOpen} onClose={onClose} company={company} />
                 </Td>
                 <Td>
                     <Center>

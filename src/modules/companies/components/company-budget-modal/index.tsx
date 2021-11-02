@@ -20,22 +20,21 @@ import {
 import { useTranslation } from "react-i18next";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Field, Form, Formik } from "formik";
-import { useAppDispatch } from "../../../../common/hooks";
-import { editCompanyAsync } from "../companies-list/company.slicer";
 
 export default function CompanyBudgetModal({
     onClose,
+    saveData,
     isOpen,
     company,
 }: {
     onClose: () => void;
+    saveData: ({ companyData }: { companyData: iCompany }) => void;
     isOpen: boolean;
     company: iCompany;
 }): JSX.Element {
     const { t } = useTranslation("companiesListTranslations");
 
-    const { company_name, budget, budget_spent, id } = company;
-    const dispatch = useAppDispatch();
+    const { company_name, budget, budget_spent } = company;
 
     const validateBudget = (value: number) => {
         let error;
@@ -53,11 +52,10 @@ export default function CompanyBudgetModal({
             <ModalContent>
                 <Formik
                     initialValues={{ budget: budget }}
-                    onSubmit={(values, actions) => {
-                        console.log("test submit", values, actions);
-                        dispatch(editCompanyAsync({ company: { ...company, budget: values.budget }, companyId: id }));
-                        actions.setSubmitting(false);
-                        onClose();
+                    onSubmit={(values) => {
+                        const tempCompany: iCompany = { ...company, budget: values.budget } as iCompany;
+
+                        saveData({ companyData: tempCompany });
                     }}
                 >
                     {() => (
